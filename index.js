@@ -20,6 +20,12 @@ app.use(cors({
   allowedHeaders: "Content-Type,Authorization"
 }));
 
+// Tambahkan route untuk menampilkan "Hello World"
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
+
 app.use('/api', logsRoute);
 app.use("/api", AuthRoutes);
 app.use("/api", CustomerRoutes);
