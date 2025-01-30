@@ -76,7 +76,7 @@ export const createDiscount = async (req, res, next) => {
       minimum_order_quantity,  // Include minimum_order_quantity
     });
 
-    res.status(201).json({ message: 'Discount created successfully', discount });
+    res.status(201).json({ message: 'Diskon berhasil dibuat', discount });
   } catch (error) {
     console.error('Error creating discount:', error);
     next(error);

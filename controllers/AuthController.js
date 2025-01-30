@@ -2,37 +2,40 @@ import User from "../models/AuthModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// Register User
-// Register User
 export const registerUser = async (req, res) => {
     const { username, password, role } = req.body;
-  
+
     // Ensure that all fields are present
     if (!username || !password) {
-      return res.status(400).json({ message: "Username and password are required." });
+        return res.status(400).json({ message: "Username and password are required." });
     }
-  
+
     // Check if username already exists
     const existingUser = await User.findOne({ where: { username } });
     if (existingUser) {
-      return res.status(400).json({ message: "Username already exists" });
+        return res.status(400).json({ message: "Username already exists" });
     }
-  
+
     // Password validation
     if (password.length < 6) {
-      return res.status(400).json({ message: "Password must be at least 6 characters" });
+        return res.status(400).json({ message: "Password must be at least 6 characters" });
     }
-  
+
+    // Validate role
+    const validRoles = ["owner", "admin"];
+    const validatedRole = validRoles.includes(role) ? role : "admin"; // Default to "admin" if invalid role
+
     // Hash password and save the user
     const hashedPassword = await bcrypt.hash(password, 10);
     await User.create({
-      username,
-      password: hashedPassword,
-      role: role || "admin", // Default role is admin if not specified
+        username,
+        password: hashedPassword,
+        role: validatedRole, // Use validated role
     });
-  
+
     res.status(201).json({ message: "User registered successfully" });
 };
+
 
   
 
