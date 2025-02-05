@@ -38,13 +38,13 @@ export const getProductById = async (req, res) => {
 // Create a new product
 export const createProduct = async (req, res) => {
   try {
-    const { name, description, price } = req.body;
+    const { name, description,barcode, price } = req.body;
 
     if (!name || !price) {
       return res.status(400).json({ message: "Name and price are required." });
     }
 
-    const product = await Product.create({ name, description, price: Math.floor(price) });
+    const product = await Product.create({ name, description,barcode, price: Math.floor(price) });
     const formattedProduct = {
       ...product.toJSON(),
       price: formatToRupiah(product.price),
@@ -61,8 +61,8 @@ export const updateProduct = async (req, res) => {
     const product = await Product.findByPk(req.params.id);
     if (!product) return res.status(404).json({ message: "Product not found." });
 
-    const { name, description, price } = req.body;
-    await product.update({ name, description, price: Math.floor(price) });
+    const { name, description,barcode, price } = req.body;
+    await product.update({ name, description,barcode, price: Math.floor(price) });
     const formattedProduct = {
       ...product.toJSON(),
       price: formatToRupiah(product.price),

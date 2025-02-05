@@ -15,6 +15,11 @@ const Product = db.define("Product", {
     type: DataTypes.TEXT,
     allowNull: true, // Deskripsi opsional
   },
+  barcode: {
+    type: DataTypes.STRING(50), // Bisa disesuaikan panjangnya
+    allowNull: true, // Jika opsional
+    unique: true // Tidak boleh ada barcode yang sama
+  },  
   price: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false, // Kolom price wajib diisi
